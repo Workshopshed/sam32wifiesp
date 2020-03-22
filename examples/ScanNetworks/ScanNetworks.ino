@@ -6,10 +6,10 @@
  Every ten seconds, it scans again. It doesn't actually
  connect to any network, so no encryption scheme is specified.
 
- For more details see: http://yaab-arduino.blogspot.com/p/wifiesp.html
+ For more details see: http://yaab-arduino.blogspot.com/p/SAM32WiFiEsp.html
 */
 
-#include "WiFiEsp.h"
+#include "SAM32WiFiEsp.h"
 
 // Emulate Serial1 on pins 6/7 if not present
 #ifndef HAVE_HWSERIAL1

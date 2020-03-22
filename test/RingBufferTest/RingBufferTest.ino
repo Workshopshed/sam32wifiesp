@@ -1,12 +1,12 @@
 /*
- WiFiEsp test: RingBufferTest
+ WiFiEsp test: WiFiEspRingBufferTest
  
- Test of the RingBuffer class.
+ Test of the WiFiEspRingBuffer class.
 */
 
-#include "WiFiEsp.h"
+#include "SAM32WiFiEsp.h"
 
-RingBuffer buf(5);
+WiFiEspRingBuffer buf(5);
 
 
 void setup()

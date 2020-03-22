@@ -16,7 +16,7 @@ along with The Arduino WiFiEsp library.  If not, see
 <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------*/
 
-#include "WiFiEsp.h"
+#include "SAM32WiFiEsp.h"
 #include "WiFiEspUdp.h"
 
 #include "utility/EspDrv.h"

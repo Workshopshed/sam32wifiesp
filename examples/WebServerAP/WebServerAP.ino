@@ -8,10 +8,10 @@
  that address in a web browser to display the web page.
  The web page will be automatically refreshed each 20 seconds.
 
- For more details see: http://yaab-arduino.blogspot.com/p/wifiesp.html
+ For more details see: http://yaab-arduino.blogspot.com/p/SAM32WiFiEsp.html
 */
 
-#include "WiFiEsp.h"
+#include "SAM32WiFiEsp.h"
 
 // Emulate Serial1 on pins 6/7 if not present
 #ifndef HAVE_HWSERIAL1
@@ -27,7 +27,7 @@ int reqCount = 0;                // number of requests received
 WiFiEspServer server(80);
 
 // use a ring buffer to increase speed and reduce memory allocation
-RingBuffer buf(8);
+WiFiEspRingBuffer buf(8);
 
 void setup()
 {

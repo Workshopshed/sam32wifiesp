@@ -8,7 +8,7 @@
 */
 
 
-#include <WiFiEsp.h>
+#include <SAM32WiFiEsp.h>
 #include <WiFiEspUdp.h>
 
 // Emulate Serial1 on pins 6/7 if not present

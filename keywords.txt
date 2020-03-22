@@ -1,12 +1,12 @@
 #######################################
-# Syntax Coloring Map For WiFiEsp
+# Syntax Coloring Map For SAM32WiFiEsp
 #######################################
 
 #######################################
 # Library (KEYWORD3)
 #######################################
 
-WiFiEsp	KEYWORD3
+SAM32WiFiEsp	KEYWORD3
 
 
 #######################################
@@ -16,7 +16,7 @@ WiFiEsp	KEYWORD3
 WiFiEspClient	KEYWORD1
 WiFiEspServer	KEYWORD1
 WiFiEspUDP	KEYWORD1
-RingBuffer	KEYWORD1
+WiFiEspRingBuffer	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)

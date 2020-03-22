@@ -1,3 +1,6 @@
+2.2.2-f1 (2020-03-22)
+  * Fix compatibility with SAM32-based boards
+
 2.2.2 (2017-11-03)
   * Make SSID a const char * in begin() #116
   * Replace NULL with 0 to avoid compilation warnings
