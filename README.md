@@ -4,9 +4,10 @@ With an ESP8266 board, WiFiEsp library allows an Arduino board to connect to the
 It can serve as either a server accepting incoming connections or a client making outgoing ones.
 The WiFiEsp library is very similar to the Arduino [WiFi](http://www.arduino.cc/en/Reference/WiFi) and [Ethernet](http://www.arduino.cc/en/Reference/Ethernet) libraries, and many of the function calls are the same. 
 
-Supports ESP SDK version 1.1.1 and above (AT version 0.25 and above).
+Supports ESP SDK version 3.4 and above (AT version 0.25 and above).
 
-**This is a fork**: this library is a fork of [WiFiEsp](https://github.com/bportaluri/WiFiEsp). This fork adds support for SAM32 based microcontrollers, such as Arduino 101, Arduino Due and others.
+**This is a fork**: this library is a fork of https://gitlab.com/Enrico204/sam32wifiesp/ which is in turn a fork of [WiFiEsp](https://github.com/bportaluri/WiFiEsp). This fork adds support for SAM32 based microcontrollers, such as Arduino 101, Arduino Due and others.
+This version is has only been tested on the Raspberry Pi Pico with an ESP-01 module running the v3.4 firmware https://docs.espressif.com/projects/esp-at/en/latest/esp32/AT_Command_Set/Wi-Fi_AT_Commands.html
 
 ## Features
 
@@ -14,7 +15,7 @@ Supports ESP SDK version 1.1.1 and above (AT version 0.25 and above).
 - Use AT commands of standard ESP firmware (no need to flash a custom firmware).
 - Support hardware and software serial ports.
 - Configurable tracing level.
-- Supports Arduino 101, Due and others SAM32.
+- Supports Arduino 101, Due and others SAM32, Pi Pico
 
 ## Wiring
 
@@ -101,4 +102,4 @@ The UDP class enables UDP message to be sent and received.
 
 ## Contributing
 
-If you discover a bug or would like to propose a new feature, please open a new [issue](https://gitlab.com/Enrico204/sam32wifiesp/-/issues).
+Probably best to contribute to the upstream projects. I just needed something that worked and hope this also helped you complete your projects.
