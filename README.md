@@ -102,4 +102,4 @@ The UDP class enables UDP message to be sent and received.
 
 ## Contributing
 
-Probably best to contribute to the upstream projects. I just needed something that worked and hope this also helped you complete your projects.
+Probably best to contribute to the upstream projects. I just needed something that worked and hope this also hope this helped you complete your projects.
