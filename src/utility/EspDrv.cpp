@@ -19,6 +19,7 @@ along with The Arduino WiFiEsp library.  If not, see
 #include <Arduino.h>
 #include <avr/pgmspace.h>
 
+#include <stdarg.h>
 #include "utility/EspDrv.h"
 #include "utility/debug.h"
 
@@ -97,9 +98,8 @@ void EspDrv::wifiDriverInit(Stream *espSerial)
 	// check firmware version
 	getFwVersion();
 
-	// prints a warning message if the firmware is not 1.X or 2.X
-	if ((fwVersion[0] != '1' and fwVersion[0] != '2') or
-		fwVersion[1] != '.')
+	// prints a warning message if the firmware is not v3.X
+	if (fwVersion[0] != 'v' or fwVersion[1] != '3' or fwVersion[2] != '.')
 	{
 		LOGWARN1(F("Warning: Unsupported firmware"), fwVersion);
 		delay(4000);
@@ -151,8 +151,9 @@ bool EspDrv::wifiConnect(const char* ssid, const char* passphrase)
 	// Escape character syntax is needed if "SSID" or "password" contains
 	// any special characters (',', '"' and '/')
 
-    // connect to access point, use CUR mode to avoid connection at boot
-	int ret = sendCmd(F("AT+CWJAP_CUR=\"%s\",\"%s\""), 20000, ssid, passphrase);
+    // AGC: Remove "CUR" option from command does not seem to be supported in current firmware
+    // Auto Connect is handled by AT+CWAUTOCONN=0 in the reset function so not needed here
+	int ret = sendCmd(F("AT+CWJAP=\"%s\",\"%s\""), 20000, ssid, passphrase);
 
 	if (ret==TAG_OK)
 	{
@@ -174,8 +175,8 @@ bool EspDrv::wifiStartAP(const char* ssid, const char* pwd, uint8_t channel, uin
 {
 	LOGDEBUG(F("> wifiStartAP"));
 
-	// set AP mode, use CUR mode to avoid automatic start at boot
-    int ret = sendCmd(F("AT+CWMODE_CUR=%d"), 10000, espMode);
+	// set AP mode, disabled "CUR" mode
+    int ret = sendCmd(F("AT+CWMODE=%d"), 10000, espMode);
 	if (ret!=TAG_OK)
 	{
 		LOGWARN1(F("Failed to set AP mode"), ssid);
@@ -187,7 +188,7 @@ bool EspDrv::wifiStartAP(const char* ssid, const char* pwd, uint8_t channel, uin
 	// any special characters (',', '"' and '/')
 
 	// start access point
-	ret = sendCmd(F("AT+CWSAP_CUR=\"%s\",\"%s\",%d,%d"), 10000, ssid, pwd, channel, enc);
+	ret = sendCmd(F("AT+CWSAP=\"%s\",\"%s\",%d,%d"), 10000, ssid, pwd, channel, enc);
 
 	if (ret!=TAG_OK)
 	{
@@ -196,9 +197,9 @@ bool EspDrv::wifiStartAP(const char* ssid, const char* pwd, uint8_t channel, uin
 	}
 	
 	if (espMode==2)
-		sendCmd(F("AT+CWDHCP_CUR=0,1"));    // enable DHCP for AP mode
+		sendCmd(F("AT+CWDHCP=0,1"));    // enable DHCP for AP mode
 	if (espMode==3)
-		sendCmd(F("AT+CWDHCP_CUR=2,1"));    // enable DHCP for station and AP mode
+		sendCmd(F("AT+CWDHCP=2,1"));    // enable DHCP for station and AP mode
 
 	LOGINFO1(F("Access point started"), ssid);
 	return true;
@@ -224,7 +225,7 @@ void EspDrv::config(IPAddress ip)
 	LOGDEBUG(F("> config"));
 
 	// disable station DHCP
-	sendCmd(F("AT+CWDHCP_CUR=1,0"));
+	sendCmd(F("AT+CWDHCP=1,0"));
 	
 	// it seems we need to wait here...
 	delay(500);
@@ -232,7 +233,7 @@ void EspDrv::config(IPAddress ip)
 	char buf[16];
 	sprintf_P(buf, PSTR("%d.%d.%d.%d"), ip[0], ip[1], ip[2], ip[3]);
 
-	int ret = sendCmd(F("AT+CIPSTA_CUR=\"%s\""), 2000, buf);
+	int ret = sendCmd(F("AT+CIPSTA=\"%s\""), 2000, buf);
 	delay(500);
 
 	if (ret==TAG_OK)
@@ -245,10 +246,10 @@ void EspDrv::configAP(IPAddress ip)
 {
 	LOGDEBUG(F("> config"));
 	
-    sendCmd(F("AT+CWMODE_CUR=2"));
+    sendCmd(F("AT+CWMODE=2"));
 	
 	// disable station DHCP
-	sendCmd(F("AT+CWDHCP_CUR=2,0"));
+	sendCmd(F("AT+CWDHCP=2,0"));
 	
 	// it seems we need to wait here...
 	delay(500);
@@ -256,7 +257,7 @@ void EspDrv::configAP(IPAddress ip)
 	char buf[16];
 	sprintf_P(buf, PSTR("%d.%d.%d.%d"), ip[0], ip[1], ip[2], ip[3]);
 
-	int ret = sendCmd(F("AT+CIPAP_CUR=\"%s\""), 2000, buf);
+	int ret = sendCmd(F("AT+CIPAP=\"%s\""), 2000, buf);
 	delay(500);
 
 	if (ret==TAG_OK)
